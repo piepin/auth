@@ -3,6 +3,8 @@
 namespace Piepin\Auth;
  
 class Auth {
+
+    private $headers = array();
  
     public function Create($data){
 
@@ -33,6 +35,8 @@ class Auth {
         $iat = json_decode($iat);
         print_r($iat);
 
+        $time = time() < (int) ( $iat->iat + 60);
+
         print_r($iat->iat);
 
         // Get key from decoded data part
@@ -41,15 +45,36 @@ class Auth {
         // Token based on data
         $compare = md5(base64_decode($key).base64_encode(json_encode($data)).base64_encode(json_encode($iat)));
              
+        print "<br>";
         print "COMPARE = $compare<br>";
-        print "TOKEN   = $token<br>";
+        print "TOKEN   = ". explode(".",$token)[2] . "<br>";
+        print "PASS    = $pass<br>";
+        print "TIME    = $time<br>";
 
         /*
         print "TOKEN   = $crypt<br>";
         print "PASS    = $pass<br>";
         */      
 
-        // Retun compare result
+        // Return compare result
         return ($compare === $token);
     }
+
+    public function Read() {
+        print_r($_SERVER);
+
+        foreach ($_SERVER as $name => $value) {
+            if (substr($name, 0, 5) == 'HTTP_') {
+                $name = ucwords(strtolower(str_replace(["HTTP_","_"],[""," "], $name)));
+                $this->headers["$name"] = $value;
+            }
+        }
+        print_r($this->headers);
+        print $this->GetAuthString();
+    }
+
+    private function GetAuthString() {
+        return $this->headers["Auth"];
+    }
+
 }
