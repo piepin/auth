@@ -1,0 +1,20 @@
+{
+    "name": "piepin/auth",
+    "description": "Simple API authorization using PHP",
+    "license": "Free",
+    "keywords": ["api", "auth"],
+    "homepage": "https://github.com/piepin",
+    "authors": [{
+        "name": "Piepin",
+        "email": "piepin7228@gmail.com"
+    }],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Piepin\\Auth\\": "src"
+        }
+    }
+}
