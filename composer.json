@@ -8,7 +8,9 @@
         "name": "Piepin",
         "email": "piepin7228@gmail.com"
     }],
-    "require": {},
+    "require": {
+        "mashape/unirest-php": "~3.0"
+    },
     "require-dev": {
         "phpunit/phpunit": "4.0.*"
     },
