@@ -108,7 +108,7 @@ class Auth {
     public function ValidateToken($token) {
 
         // Explode string into variables
-        list($data, $iat, $crypt) = explode(".",$token);
+        @list($data, $iat, $crypt) = explode(".",$token);
 
         // Decode data part
         $this->__debug("DATA", $data);
@@ -132,7 +132,7 @@ class Auth {
         $this->__debug("TIME", $iat->iat);
         
         //=== Is time expired?
-        if ( time() >= (int) ( $iat->iat + 60) ) {
+        if ( time() >= (int) ( $iat->iat + 31536000 ) ) {
             if (!$this->debug) {
                 return false;
             }
@@ -211,9 +211,10 @@ class Auth {
     public function ResponseJSON($data, $status=200) {
         if (!headers_sent()) {
             header_remove();
+            //header('Status: ' . $status);
+            http_response_code($status);
             header("Server: West Java");
             header("Content-Type: application/json");
-            header('Status: ' . $status);
             http_response_code($status);
             echo json_encode($data);
             die();
