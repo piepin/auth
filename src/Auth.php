@@ -186,6 +186,10 @@ class Auth {
         }
         $this->__debug("SERVER", $_SERVER);
         $this->__debug("AUTH HEADER", $this->GetAuthString());
+        
+        // preg_match('/Bearer\s(\S+)/i', $this->GetAuthString(), $out);
+        // return $out[1];
+
         return $this->GetAuthString();
     }
 
